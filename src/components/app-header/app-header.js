@@ -1,7 +1,7 @@
-import React from 'react';//импортим реакт в приложение 
+import React from 'react';
 
-const AppHeader = ({liked, allPosts}) => {//создаем функцию которая добавит наш хедер-текст
-    return (//результатом работы данной функции будет готовая верска на странице 
+const AppHeader = ({liked, allPosts}) => {
+    return (
         <div className="app-header d-flex">
             <h1>Новые твиты</h1>
             <h2>{allPosts} записей, из них понравилось {liked}</h2>
@@ -9,4 +9,4 @@ const AppHeader = ({liked, allPosts}) => {//создаем функцию кот
     )
 }
 
-export default AppHeader;//експортируем приложение 
+export default AppHeader;

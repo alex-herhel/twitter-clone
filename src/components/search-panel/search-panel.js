@@ -1,22 +1,22 @@
-import React, { Component } from 'react';//импортим реакт и реакт компонент в приложение 
-import './search-panel.css';//импортим стили
+import React, { Component } from 'react';
+import './search-panel.css';
 
-export default class SearchPanel extends Component {//создаем и експорти класс при помощи рекат компонента
-    constructor(props){//создаем конструктор 
-        super(props);//создаем суперконструктор
-        this.state = {//создаем стейт со своим значением 
+export default class SearchPanel extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
             term: ''
         }
-       this.onUpdateSearch = this.onUpdateSearch.bind(this);//привязываем елемент к контексту
+       this.onUpdateSearch = this.onUpdateSearch.bind(this);
     }
 
-    onUpdateSearch(e){//метод который отвечает за поиск введенного значения 
-        const term = e.target.value;//ссылаемся на введенное значение
-        this.setState({term});//не на прямую меняем значение стейта на то что ввели
-        this.props.onUpdateSearch(term);//и непосредственно в наш пропс передаем новый статус term
+    onUpdateSearch(e){
+        const term = e.target.value;
+        this.setState({term});
+        this.props.onUpdateSearch(term);
     }
-    render(){//рендерим верстку 
-    return (//возвращаем отрендеренную верстку
+    render(){
+    return (
         <input
             className="form-control search-input"
             type="text"

@@ -1,20 +1,20 @@
-import React, {Component} from 'react';//импортим реакт и реакт компонент в приложение 
+import React, {Component} from 'react';
 
-import './post-list-item.css';//импортим стили
+import './post-list-item.css';
 
-export default class PostListItem extends Component {//екпортим класс  
+export default class PostListItem extends Component {
 
-    render() {//используем метод рендер для создание изменений компонентов
-        const {label, onDelete, onToggleImportant, onToggleLiked, important, like} = this.props;//через диструктуризацию пропсов достаем нужные нам пропсы
+    render() {
+        const {label, onDelete, onToggleImportant, onToggleLiked, important, like} = this.props;
 
-        let classNames = "app-list-item d-flex justify-content-between";//передали классы в переменную
+        let classNames = "app-list-item d-flex justify-content-between";
         if (important) {
-            classNames += ' important'; //если нажата кнопка важно true, то добавляем в класс новый класс 
+            classNames += ' important'; 
         }
         if (like) {
-            classNames += ' like'; // если нажата кнопка лайк true, по добавляем новый класс
+            classNames += ' like';
         }
-    return (//возвращаем новую верстку
+    return (
         <div className={classNames}> 
             <span 
                 className="app-list-item-label"

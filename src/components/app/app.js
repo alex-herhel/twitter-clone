@@ -1,116 +1,116 @@
-import React, {Component} from 'react'; //импорти реакт и достаем от туда еще и компонент
+import React, {Component} from 'react';
 
-import AppHeader from '../app-header';//импортим часть общего проекта "хедер"
-import SearchPanel from '../search-panel';//импорти часть общего проекта "панель поиска"
-import PostStatusFilter from '../post-status-filter';//импорти часть проекта "фильтр постов"
-import PostList from '../post-list';//импортим часть проекта "лист всех постов"
-import PostAddForm from '../post-add-form';//импортим часть проекта "форма добавления нового поста"
+import AppHeader from '../app-header';
+import SearchPanel from '../search-panel';
+import PostStatusFilter from '../post-status-filter';
+import PostList from '../post-list';
+import PostAddForm from '../post-add-form';
 
-export default class App extends Component {//при помощи компонента создаем класс и експортим его
-    constructor(props){//создаем конструктор пропсов
-        super(props);//создаем суперконструктор для изменения значений в стейте
-        this.state = {//создаем стейт 
+export default class App extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
             data: [
-                {label: 'gggggggg', important: false, like: false, id: '1'},//каждому присвоен лейбл с контентом, значение важности (фолс по дефолту) и уникальый ключ
-                {label: 'eeeeeee', important: false, like: false, id: '2'},
-                {label: 'zzzzzz', important: false, like: false, id: '3'},
-                ],//в котором нам пришел массив твитов с их уникальными пропсами 
-            term: '',//введенное значение поеска путо для отображения их всех
-            filter: 'all'//фильтр так же по дефолту для отображения всех елементов
+                {label: 'Post 1', important: false, like: false, id: '1'},
+                {label: 'Post 2', important: false, like: false, id: '2'},
+                {label: 'Post 3', important: false, like: false, id: '3'},
+                ],
+            term: '',
+            filter: 'all'
         };
-        this.deleteItem = this.deleteItem.bind(this);//привязываем елемент к контексту
-        this.addItem = this.addItem.bind(this);//привязываем елемент к контексту
-        this.onToggleImportant = this.onToggleImportant.bind(this);//привязываем елемент к контексту
-        this.onToggleLiked = this.onToggleLiked.bind(this);//привязываем елемент к контексту
-        this.onUpdateSearch = this.onUpdateSearch.bind(this);//привязываем елемент к контексту
-        this.onFilterSelect = this.onFilterSelect.bind(this);//привязываем елемент к контексту
-        this.maxId = 4;//привязываем елемент к контексту
+        this.deleteItem = this.deleteItem.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.onToggleImportant = this.onToggleImportant.bind(this);
+        this.onToggleLiked = this.onToggleLiked.bind(this);
+        this.onUpdateSearch = this.onUpdateSearch.bind(this);
+        this.onFilterSelect = this.onFilterSelect.bind(this);
+        this.maxId = 4;
     }
 
-    deleteItem(id){//метод удаления елемента, передаем в нее айди нашего елемента
-        this.setState(({data}) => {//меняем наш стейт не на прямую а только для нас 
-            const index = data.findIndex(elem => elem.id === id)//при помощи поиска findIndex в массиве нашли елемент и сравнили его с тем что мы хотим удалить, и если совпало передали его в переменную 
+    deleteItem(id){
+        this.setState(({data}) => {
+            const index = data.findIndex(elem => elem.id === id)
 
-            const newArr = [...data.slice(0, index),...data.slice(index+1)]//создаем новый массив который удали наш елемент (заполнили елементы до наего удаляемого, пропустили его, и дальше заполняем)
+            const newArr = [...data.slice(0, index),...data.slice(index+1)]
 
             return{
-                data: newArr//возвращаем в наш массив с сервера новый массив 
+                data: newArr
             }
         });
     }
 
-    addItem(body){//метод добавления нашего елемента, а передаем наш текст введенный в строку
-        const newItem = {//новый айтем будет нести в себе такие пропсы 
-            label: body,//наш текст
-            important: false,//не важный пост по дефолтку
-            id: this.maxId++//наш максимальный айду увеличиться на 1
+    addItem(body){
+        const newItem = {
+            label: body,
+            important: false,
+            id: this.maxId++
         }
-            this.setState(({data}) => {//меняем стейт не на прямую 
-                const newArr = [...data, newItem];//создаем новый массив в нашим новым елементов в конце
+            this.setState(({data}) => {
+                const newArr = [...data, newItem];
                 return{
-                    data: newArr//возвращаем новый массив
+                    data: newArr
                 }
             })
         }
 
-    onToggleImportant(id){//включаем важность поста
-        this.setState(({data}) => {//меняем стейт не на прямую 
-            const index = data.findIndex(elem => elem.id === id);//ищем наш выбранный елемент по его индексу и передаем его в переменную
+    onToggleImportant(id){
+        this.setState(({data}) => {
+            const index = data.findIndex(elem => elem.id === id);
 
-            const old = data[index];//наш елемент массива с нашим айди 
-            const newItem = {...old, important: !old.important};//новый елемент со всеми старыми пропсами кроме важности, он теперь имеет значение правда
-            const newArr = [...data.slice(0, index), newItem, ...data.slice(index+1)];//новый массив с измененным статусом елемента
+            const old = data[index];
+            const newItem = {...old, important: !old.important};
+            const newArr = [...data.slice(0, index), newItem, ...data.slice(index+1)];
 
             return{
-                data: newArr//возвращаем новый массив
+                data: newArr
             }
         })    
     }
-    onToggleLiked(id){//метод статуса лайк
-        this.setState(({data}) => {//меняем стейт не на прямую
-            const index = data.findIndex(elem => elem.id === id);//ищем елемент оп индексу
+    onToggleLiked(id){
+        this.setState(({data}) => {
+            const index = data.findIndex(elem => elem.id === id);
 
-            const old = data[index];//наш елемент
-            const newItem = {...old, like: !old.like};// меняем статус лайк на правду
-            const newArr = [...data.slice(0, index), newItem, ...data.slice(index+1)];//создаем новый массив 
+            const old = data[index];
+            const newItem = {...old, like: !old.like};
+            const newArr = [...data.slice(0, index), newItem, ...data.slice(index+1)];
 
             return{
-                data: newArr//возвращаем массив
+                data: newArr
             }
         })
     }
 
-    searchPost(items,term){//метод поисковой панели
-        if (term.length === 0){//если мы ничего не ввели то возвращаем все елементы не трогая список
+    searchPost(items,term){
+        if (term.length === 0){
             return items
         }
 
-        return items.filter((item) => {//возвращаем елементы которые отфильтровались по введенному тексту
-            return item.label.indexOf(term) > -1//различие между текстом и елементом не должно привышать 1 букву
+        return items.filter((item) => {
+            return item.label.indexOf(term) > -1
         });
     }
 
-    filterPost(items, filter){//метод фильтром елементов
-        if(filter === 'like'){//если фильтр лайк
-            return items.filter(item => item.like)//фильтруем все елементы по лайкам
+    filterPost(items, filter){
+        if(filter === 'like'){
+            return items.filter(item => item.like)
         }else{
-            return items//иначе если все без лайков то не трогаем
+            return items
         }
     }
-    onUpdateSearch(term){//обнуление строки ввода при поиске
+    onUpdateSearch(term){
         this.setState({term});
     }
 
-    onFilterSelect(filter){//обнуление фильтров
+    onFilterSelect(filter){
         this.setState({filter});
     }
-    render(){//рендерим верстку
-        const {data, term, filter} = this.state;//из нашего стейта диструктуризируем все его елементы
-        const liked = data.filter(item => item.like).length;//статус лайк
-        const allPosts = this.state.data.length;//статус важно
+    render(){
+        const {data, term, filter} = this.state;
+        const liked = data.filter(item => item.like).length;
+        const allPosts = this.state.data.length;
 
-        const visiblePosts = this.filterPost(this.searchPost(data, term), filter);//переменная общей видимости постов при всех возможным критериях
-        return(//возвращаем нашу вурстку 
+        const visiblePosts = this.filterPost(this.searchPost(data, term), filter);
+        return(
             <div className="app">
                 <AppHeader
                 liked = {liked}
